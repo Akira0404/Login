@@ -1,15 +1,11 @@
 import React from 'react'
-import { FaLock } from 'react-icons/fa'
+import { FaLock, FaArrowLeft } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 import { MdEmail } from 'react-icons/md'
 
-function Login() {
+function RecuperarSenha() {
 
   const navegar = useNavigate();
-
-  const handleCadastro = () => {
-    navegar('/cadastro');
-  }
 
   const handleRecuperarSenha = () => {
     navegar('/recuperação de senha');
@@ -18,9 +14,21 @@ function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 flex-col gap-5 ">
       <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-sm">
+        
+         {/* Setinha de voltar */}
+                <button
+                  onClick={() => navigate('/')}  // volta para o Login
+                  className="absolute top-4 left-4 text-gray-500 hover:text-gray-800
+                             transition-colors"
+                >
+                  <FaArrowLeft size={20} />
+                </button>
+        
+
         <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">
-          Login
+          Recuperação de senha
         </h1>
+        <p>coloque seu email para </p>
 
         {/* Campo Email */}
         <div className="mb-4">
@@ -43,34 +51,6 @@ function Login() {
           </div>
         </div>
 
-        {/* Campo Senha */}
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-600 mb-1">
-            Senha
-          </label>
-          <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
-              <FaLock />
-            </span>
-            <input
-              type="password"
-              name="senha"
-              id="password"
-              placeholder="Senha"
-              className="w-full border border-gray-300 rounded-lg py-2 pl-10 pr-3
-                         focus:outline-none focus:ring-2 focus:ring-blue-500
-                         focus:border-transparent transition"
-            />
-          </div>
-        </div>
-
-        <div className='mb-4'>
-            <a 
-            onClick={handleRecuperarSenha}
-            className='text-blue-800 underline decoration-solid flex justify-center'
-            >
-            Esqueceu a senha?</a>
-        </div>
 
         {/* Botão */}
         <button
@@ -81,18 +61,8 @@ function Login() {
           Entrar
         </button>
       </div>
-
-       <div className='flex'>
-          <p>Não tem cadastro?</p>
-            <a 
-            href=""
-            className='text-blue-800 underline decoration-solid flex justify-center'
-            onClick={handleCadastro}
-            >
-            Fazer Cadastro</a>
-        </div>
     </div>
   )
 }
 
-export default Login
+export default RecuperarSenha
