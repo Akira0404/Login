@@ -3,6 +3,7 @@ import Login from './pages/Login'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Cadastro from './pages/Cadastro'
 import RecuperarSenha from './pages/RecuperarSenha'
+import Home from './pages/Home'
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
         <Route path='/' element={<Login />} />
         <Route path='/cadastro' element={<Cadastro />} />
         <Route path='/recuperação de senha' element={<RecuperarSenha />} />
+        <Route path='/home' element={<Home />} /> 
       </Routes>
     </BrowserRouter>
   )

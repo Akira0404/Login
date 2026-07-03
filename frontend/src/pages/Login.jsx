@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaLock } from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
 import { MdEmail } from 'react-icons/md'
@@ -6,6 +6,29 @@ import { MdEmail } from 'react-icons/md'
 function Login() {
 
   const navegar = useNavigate();
+
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+
+  const handleLogin = async () => {
+    try{
+      const resposta = await fetch('http://localhost:3001/login', {
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, senha })
+      })
+       const dados = await resposta.json();
+
+       if(resposta.ok) {
+        alert(dados.mensagem)
+        navegar('/home')
+       } else {
+        alert(dados.mensagem)
+       }
+    } catch(erro) {
+      alert('Erro ao conectar com o servidor');
+    }
+  }
 
   const handleCadastro = () => {
     navegar('/cadastro');
@@ -33,6 +56,8 @@ function Login() {
             </span>
             <input
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               name="email"
               id="email"
               placeholder="exemplo@gmail.com"
@@ -54,6 +79,8 @@ function Login() {
             </span>
             <input
               type="password"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
               name="senha"
               id="password"
               placeholder="Senha"
@@ -74,6 +101,7 @@ function Login() {
 
         {/* Botão */}
         <button
+        onClick={handleLogin}
           className="w-full bg-blue-600 text-white py-2 rounded-lg
                      font-medium hover:bg-blue-700 active:scale-[0.98]
                      transition-all duration-150"
@@ -87,7 +115,10 @@ function Login() {
             <a 
             href=""
             className='text-blue-800 underline decoration-solid flex justify-center'
-            onClick={handleCadastro}
+            onClick={(e) => {
+              e.preventDefault()
+              handleCadastro()
+            }}
             >
             Fazer Cadastro</a>
         </div>
