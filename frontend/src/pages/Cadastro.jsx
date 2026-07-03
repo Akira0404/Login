@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 function Cadastro() {
 
-  const navigate = useNavigate()  // <-- adicionar
+  const navegar = useNavigate();
 
 
   return (
@@ -14,7 +14,7 @@ function Cadastro() {
         
               {/* Setinha de voltar */}
         <button
-          onClick={() => navigate('/')}  // volta para o Login
+          onClick={() => navegar('/')}  // volta para o Login
           className="absolute top-4 left-4 text-gray-500 hover:text-gray-800
                      transition-colors"
         >

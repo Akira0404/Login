@@ -67,7 +67,7 @@ function Login() {
         <div className='mb-4'>
             <a 
             onClick={handleRecuperarSenha}
-            className='text-blue-800 underline decoration-solid flex justify-center'
+            className='text-blue-800 underline decoration-solid flex justify-center cursor-pointer'
             >
             Esqueceu a senha?</a>
         </div>
