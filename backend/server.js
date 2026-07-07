@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const conexao = require('./config/database'); 
 const bcrypt = require('bcryptjs');
+const transporter = require('./config/email')
 
 const app = express();
 
@@ -86,6 +87,35 @@ app.post('/login', (req, res) => {
         return res.status(500).json({ erro: 'Erro interno no servidor' });
     }
 });
+
+// Rota de recuperção de senha
+app.post('/api/recuperar-senha', async (req, res) => {
+    const { email } = req.body;
+
+    const sql = 'SELECT * FROM usuarios WHERE email = ?';
+
+    conexao.query(sql, [email], async (erro, resultado) => {
+        if(erro) {
+            return res.status(400).json({ erro: erro.mensagem });
+        }
+
+        if(!resultado || resultado.length === 0) {
+            return res.status(404).json({ erro: 'E-mail não encontrado'});
+        }
+
+        const usuario = resultado[0];
+        const codigo = Math.floor(100000 + Math.random() * 900000);
+
+        await transporter.sendMail({
+            from: "Recuperação de senha",
+            to: email,
+            subject: "↓ Seu código de recuperação ↓",
+            html: `<h1>${codigo}</h1><br><p>Expira em 10 minutos</p>`
+        });
+
+        return res.json({ mensagem: 'Código enviado' });
+    })
+})
 
 app.listen(3001, () => {
     console.log('Servidor rodando na porta 3001');
