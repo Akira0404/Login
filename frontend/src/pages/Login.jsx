@@ -20,7 +20,6 @@ function Login() {
        const dados = await resposta.json();
 
        if(resposta.ok) {
-        alert(dados.mensagem)
         navegar('/home')
        } else {
         alert(dados.mensagem)

@@ -12,7 +12,8 @@ function App() {
       <Routes>
         <Route path='/' element={<Login />} />
         <Route path='/cadastro' element={<Cadastro />} />
-        <Route path='/recuperação de senha' element={<RecuperarSenha />} />
+        <Route path='/recuperação-senha' element={<RecuperarSenha />} />
+        <Route path='/verificar-codigo' element={<VerificarCodigo />} />
         <Route path='/home' element={<Home />} /> 
       </Routes>
     </BrowserRouter>

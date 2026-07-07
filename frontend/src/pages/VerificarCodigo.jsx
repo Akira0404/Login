@@ -3,45 +3,17 @@ import { FaLock, FaArrowLeft } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { MdEmail, MdSecurityUpdateWarning } from "react-icons/md";
 import { AiTwotoneMail } from "react-icons/ai";
+import { GrSecure } from "react-icons/gr"
 import { useState } from "react";
 
-function RecuperarSenha() {
+async function VerificarCodigo() {
+
   const navegar = useNavigate();
-  const [email, setEmail] = useState("");
-  const [mensagem, setMensagem] = useState("");
-  const [erro, setErro] = useState("");
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-
-    setMensagem("");
-    setErro("");
-
-    try {
-      const resposta = await fetch(
-        "http://localhost:3001/api/recuperar-senha",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email }),
-        },
-      );
-
-      const dados = await resposta.json();
-
-      if (dados.erro) {
-        setErro(dados.erro);
-        return;
-      }
-
-      setMensagem(dados.mensagem);
-
-      setTimeout(() => {
-        navergar("verificar-codigo", { state: { email } });
-      }, 2000);
-    } catch (error) {
-      setErro("Erro ao conectar com o servidor");
-    }
+  const resposta = await fetch('http://localhost:3001/api/verificar-codigo', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' }
+  })
   }
 
   return (
@@ -57,14 +29,13 @@ function RecuperarSenha() {
         </button>
 
         <h1 className="text-2xl font-bold text-center mb-6 text-gray-800">
-          Recuperação de senha
+          Verificação de código
         </h1>
         <p className="text-sm text-gray-500 mb-4 text-center">
           {" "}
-          Informe o email associado à sua conta e enviaremos
-          um código para redefinir sua senha.{" "}
+          Informe o código enviado no email{" "}
         </p>
-        <AiTwotoneMail className="size-10 ml-35" />
+        <GrSecure className="size-10 ml-35" />
 
         {/* Campo Email */}
         <form onSubmit={handleSubmit}>
@@ -114,4 +85,4 @@ function RecuperarSenha() {
   );
 }
 
-export default RecuperarSenha;
+export default VerificarCodigo;
