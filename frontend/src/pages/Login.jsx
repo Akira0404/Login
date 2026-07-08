@@ -34,7 +34,7 @@ function Login() {
   }
 
   const handleRecuperarSenha = () => {
-    navegar('/recuperação de senha');
+    navegar('/recuperar-senha');
   }
 
   return (

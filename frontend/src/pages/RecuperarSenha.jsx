@@ -4,12 +4,15 @@ import { useNavigate } from "react-router-dom";
 import { MdEmail, MdSecurityUpdateWarning } from "react-icons/md";
 import { AiTwotoneMail } from "react-icons/ai";
 import { useState } from "react";
+import Modal from "../components/Modal";
+import { useEffect } from "react";
 
 function RecuperarSenha() {
   const navegar = useNavigate();
   const [email, setEmail] = useState("");
   const [mensagem, setMensagem] = useState("");
   const [erro, setErro] = useState("");
+  const [mostrarModal, setMostrarModal] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -34,15 +37,32 @@ function RecuperarSenha() {
         return;
       }
 
+      setMostrarModal(true)
+
       setMensagem(dados.mensagem);
 
       setTimeout(() => {
-        navergar("verificar-codigo", { state: { email } });
-      }, 2000);
+        navegar("/verificar-codigo", { state: { email } });
+      }, 1000);
     } catch (error) {
       setErro("Erro ao conectar com o servidor");
     }
   }
+
+  function fecharModal() {
+    setMostrarModal(false);
+    navegar('/verificar-codigo', { state: { email } });
+  }
+
+  useEffect(() => {
+    if(mostrarModal) {
+      const timer = setTimeout(() => {
+        fecharModal();
+      }, 4000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [mostrarModal]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -102,6 +122,7 @@ function RecuperarSenha() {
 
         {/* Botão */}
         <button
+        type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded-lg
                      font-medium hover:bg-blue-700 active:scale-[0.98]
                      transition-all duration-150"
@@ -110,6 +131,14 @@ function RecuperarSenha() {
         </button>
         </form>
       </div>
+
+       {/* Modal aparece quando mostrarModal é true */}
+      {mostrarModal && (
+        <Modal
+          mensagem={`Enviamos um código de 6 dígitos para ${email}`}
+          onClose={fecharModal}
+        />
+      )}
     </div>
   );
 }
