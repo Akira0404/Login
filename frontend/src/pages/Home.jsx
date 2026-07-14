@@ -7,6 +7,7 @@ import {
 } from 'react-icons/fa';
 import { GiRazor } from 'react-icons/gi';
 import CardInfo from '../components/CardInfo';
+import ModalInfo from '../components/ModalInfo';
 
 function Home() {
   const [menuAberto, setMenuAberto] = useState(false);
@@ -24,14 +25,7 @@ function Home() {
     { id: 'perfil', label: 'Meu Perfil', icon: <FaUser /> },
   ];
 
-  const servicos = [
-    { id: 1, nome: "Corte de Cabelo", preco: "R$ 50,00", tempo: "30 min" },
-    { id: 2, nome: "Barba", preco: "R$ 35,00", tempo: "20 min" },
-    { id: 3, nome: "Corte + Barba", preco: "R$ 70,00", tempo: "45 min" },
-    { id: 4, nome: "Degradê", preco: "R$ 50,00", tempo: "35 min" },
-    { id: 5, nome: "Pigmentação", preco: "R$ 40,00", tempo: "25 min" },
-    { id: 6, nome: "Sobrancelha", preco: "R$ 15,00", tempo: "10 min" },
-  ];
+  
 
   function Sidebar({ className = '' }) {
     return (
@@ -174,17 +168,9 @@ function Home() {
             <p className="text-[#666] text-sm mt-1">Confira nossos serviços</p>
           </div>
 
-          {/* Grid de serviços */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {servicos.map((item) => (
-              <CardInfo
-                key={item.id}
-                nome={item.nome}
-                preco={item.preco}
-                tempo={item.tempo}
-              />
-            ))}
-          </div>
+            <CardInfo />
+
+            <ModalInfo />
         </main>
       </div>
     </div>
