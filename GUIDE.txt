@@ -1,0 +1,7 @@
+# Frontend
+npm install
+npm install react-router-dom react-icons framer-motion
+
+# Backend
+npm init -y
+npm install express cors bcryptjs nodemailer mysql2

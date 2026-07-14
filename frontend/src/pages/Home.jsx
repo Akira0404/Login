@@ -24,13 +24,18 @@ function Home() {
     { id: 'perfil', label: 'Meu Perfil', icon: <FaUser /> },
   ];
 
-    const servicos = {
-        id: 1, titulo: "Corte de Cabelo", preco: "R$50,00"
-    }
+  const servicos = [
+    { id: 1, nome: "Corte de Cabelo", preco: "R$ 50,00", tempo: "30 min" },
+    { id: 2, nome: "Barba", preco: "R$ 35,00", tempo: "20 min" },
+    { id: 3, nome: "Corte + Barba", preco: "R$ 70,00", tempo: "45 min" },
+    { id: 4, nome: "Degradê", preco: "R$ 50,00", tempo: "35 min" },
+    { id: 5, nome: "Pigmentação", preco: "R$ 40,00", tempo: "25 min" },
+    { id: 6, nome: "Sobrancelha", preco: "R$ 15,00", tempo: "10 min" },
+  ];
 
   function Sidebar({ className = '' }) {
     return (
-      <div className={`bg-[#111] border-r border-[#1e1e1e] flex flex-col ${className}`}>
+      <div className={`bg-[#111] border-r border-[#1e1e1e] flex flex-col h-full ${className}`}>
         <div className="p-6 border-b border-[#1e1e1e]">
           <div className="flex items-center gap-3">
             <GiRazor className="text-[#c8a97e] text-2xl" />
@@ -120,8 +125,10 @@ function Home() {
         )}
       </AnimatePresence>
 
-      {/* Header */}
+      {/* Conteúdo principal */}
       <div className="lg:ml-64">
+
+        {/* Header */}
         <header className="sticky top-0 z-30 bg-[#0a0a0a]/80 backdrop-blur-md border-b border-[#1e1e1e]">
           <div className="flex items-center justify-between px-4 sm:px-6 py-4">
             <div className="flex items-center gap-4">
@@ -156,16 +163,29 @@ function Home() {
           </div>
         </header>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {servicos.map((item) => (
-        <Card
-          key={item.id}
-          nome={item.nome}
-          preco={item.preco}
-          tempo={item.tempo}
-        />
-      ))}
-    </div>
+        {/* Área de conteúdo */}
+        <main className="p-4 sm:p-6 lg:p-8">
+
+          {/* Saudação */}
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold">
+              Olá, <span className="text-[#c8a97e]">{usuario.nome.split(' ')[0]}</span>
+            </h2>
+            <p className="text-[#666] text-sm mt-1">Confira nossos serviços</p>
+          </div>
+
+          {/* Grid de serviços */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {servicos.map((item) => (
+              <CardInfo
+                key={item.id}
+                nome={item.nome}
+                preco={item.preco}
+                tempo={item.tempo}
+              />
+            ))}
+          </div>
+        </main>
       </div>
     </div>
   );
