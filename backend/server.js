@@ -11,7 +11,7 @@ app.use(express.json());
 
 // ==== ROTAS ====
 
-// CADASTRO
+// CADASTRO USUÁRIOS
 app.post('/api/auth/cadastro', (req, res) => {
     try {
         const { nome, email, senha } = req.body;
@@ -40,6 +40,20 @@ app.post('/api/auth/cadastro', (req, res) => {
         return res.status(500).json({ erro: 'Erro interno no servidor' });
     }
 });
+
+// CADASTRO SERVIÇOS
+app.post('/criar-servicos', (req, res) => {
+    const { servico, preco, duracao } = req.body;
+
+    const sql = "INSERT INTO servicos (titulo, preco, duracao) VALUES (?, ?, ?)";
+
+    conexao.query(sql, [servico, preco, duracao], (erro, resultado) => {
+        if(erro) {
+            return res.status(400).json({ error: "Não foi possivel criar o serviço" });
+        } 
+        return res.status(201).json({ mensagem: "Serviço criado com sucesso!"})
+    })
+})
 
 // LOGIN
 app.post('/login', (req, res) => {
