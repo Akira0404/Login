@@ -1,7 +1,9 @@
-import React from "react";
+import { React, useState }from "react";
 import { FaTimes } from "react-icons/fa";
 
 function ModalInfo({ isOpen, onClose, nome, preco, tempo }) {
+
+  const []
 
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4 ">
@@ -16,35 +18,42 @@ function ModalInfo({ isOpen, onClose, nome, preco, tempo }) {
           <FaTimes size={20} />
         </button>
 
-        <label className="flex flex-col">Serviço:
+        <div className="flex flex-col gap-4 justify-center mt-8">
+
+          <p className="text-3xl">Crie seus serviços</p>
+
+          <label>Serviço:
             <input 
             type="text" 
             id="servico"
             className="bg-[#2a2a2a] border border-[#3e3e3e] rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#c8a97e] transition-colors w-full"
             />
-        </label>
-        <label className="flex flex-col">Preço:
+          </label>
+          <label>Preço:
             <input 
             type="text" 
             id="preco"
             className="bg-[#2a2a2a] border border-[#3e3e3e] rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#c8a97e] transition-colors w-full"
              />
-        </label>
+          </label>
         
-        <label className="flex flex-col">Tempo:
+          <label>Tempo:
             <input 
             type="text" 
             id="tempo"
             className="bg-[#2a2a2a] border border-[#3e3e3e] rounded-lg px-4 py-2.5 text-white focus:outline-none focus:border-[#c8a97e] transition-colors w-full"
              />
-        </label>
+          </label>
+
+        </div>
+
         
         {/* Botão de ação */}
         <button 
           onClick={onClose}
           className="mt-6 w-full bg-[#c8a97e] text-black font-medium py-2 rounded-lg hover:bg-[#b09268] transition-colors"
         >
-          Confirmar
+          Criar
         </button>
 
       </div>
