@@ -7,7 +7,13 @@ import {
 } from 'react-icons/fa';
 import { GiRazor } from 'react-icons/gi';
 import CardInfo from '../components/CardInfo';
-import ModalInfo from '../components/ModalInfo';
+import CriarServicos from '../components/CriarServicos';
+
+function Servicos() {
+  const [modalAberto, setModalAberto] = useState(false);
+  const [servicos, setServicos] = useState([]);
+}
+ 
 
 function Home() {
   const [menuAberto, setMenuAberto] = useState(false);
@@ -170,7 +176,7 @@ function Home() {
 
             <CardInfo />
 
-            <ModalInfo />
+            <CriarServicos />
         </main>
       </div>
     </div>
