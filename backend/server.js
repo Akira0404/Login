@@ -42,18 +42,16 @@ app.post('/api/auth/cadastro', (req, res) => {
 });
 
 // CADASTRO SERVIÇOS
-app.post('/criar-servicos', (req, res) => {
-    const { servico, preco, duracao } = req.body;
+app.post('/criar-servicos', async (req, res) => {
+    const { nome, preco, duracao } = req.body;
 
-    const sql = "INSERT INTO servicos (titulo, preco, duracao) VALUES (?, ?, ?)";
-
-    conexao.query(sql, [servico, preco, duracao], (erro, resultado) => {
-        if(erro) {
-            return res.status(400).json({ error: "Não foi possivel criar o serviço" });
-        } 
-        return res.status(201).json({ mensagem: "Serviço criado com sucesso!"})
-    })
-})
+    try {
+    const [resultado]= await conexao.query("INSERT INTO servicos (titulo, preco, duracao) VALUES (?, ?, ?)", [nome, preco, duracao]);
+    res.status(201).json({ mensagem: "Serviço criado com sucesso!"})
+    } catch (erro) {
+        res.status(500).json({ mensagem: "Erro ao criar serviço"});
+    }
+});
 
 // LOGIN
 app.post('/login', (req, res) => {
