@@ -43,16 +43,53 @@ app.post('/api/auth/cadastro', (req, res) => {
 
 // CADASTRO SERVIÇOS
 app.post('/criar-servicos', (req, res) => {
-    const { nome, preco, duracao } = req.body;
+    const { nome, preco, duracao, nomeRegra, dataInicio, dataFim, horaInicio, horaFim } = req.body;
 
-    const sql = "INSERT INTO servicos (titulo, preco, duracao) VALUES (?, ?, ?)";
-    conexao.query(sql, [nome, preco, duracao], (erro, resultado) => {
-        if (erro) {
-            return res.status(500).json({ mensagem: "Erro ao criar serviço" });
-        }
-        res.status(201).json({ mensagem: "Serviço criado com sucesso!" });
-    });
+    if(nomeRegra && dataInicio && dataFim && horaInicio && horaFim) {
+
+        const sqlRegra = 'INSERT INTO regras (nome, data_inicio, data_fim, horario_inicio, horario_fim) VALUES (?,?,?,?,?)'
+    
+        conexao.query(sqlRegra, [nomeRegra, dataInicio, dataFim, horaInicio, horaFim], (erro, resultadoRegra) => {
+            if(erro) {
+                return res.status(500).json({ mensagem: "Erro ao criar regra!."})
+            }
+        })
+        const regraId = resultadoRegra.insertId;
+    
+        const sqlServico = 'INSERT INTO servicos (titulo, preco, duracao, regra_id) VALUES (?,?,?,?)';
+    
+        conexao.query(sqlServico, [nome, preco, duracao, regraId], (erro, resultadoServico) => {
+            if (erro) {
+                return res.status(500).json({ mensagem: "Erro ao criar serviço!." });
+            }
+    
+            return res.status(201).json({
+                mensagem: "Serviço criado com sucesso!",
+                servicoId: resultadoServico.insertId,
+                regraId: regraId
+            })
+        })
+    } else {
+        // Sem regra — cria o serviço sem regra vinculada
+        // Precisa de uma regra padrão ou tornar regra_id nullable
+        const sqlServico = 'INSERT INTO servicos (titulo, preco, duracao) VALUES (?, ?, ?)';
+
+        conexao.query(sqlServico, [nome, preco, duracao], (erro, resultadoServico) => {
+            if (erro) {
+                console.log('Erro ao criar serviço:', erro);
+                return res.status(500).json({ mensagem: "Erro ao criar serviço" });
+            }
+
+            return res.status(201).json({
+                mensagem: "Serviço criado com sucesso!",
+                servicoId: resultadoServico.insertId
+            });
+        });
+    }
+
 });
+
+
 
 // LOGIN
 app.post('/login', (req, res) => {
